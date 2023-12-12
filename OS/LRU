@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isPresent(vector<int> arr, int num){
+    for(int i = 0;  i < arr.size(); i++){
+        if(arr[i] == num) return true;
+    }
+    return false;
+}
+
+int main() {
+    int size, frameSize;
+    cout << "enter size: ";
+    cin >> size;
+    cout << "frame size: ";
+    cin >> frameSize;
+    int arr[size];
+    cout << "enter elements " << endl;
+    for(int i = 0; i < size; i++){
+        cin >> arr[i];
+    }
+    int ptr = 0, fcnt = 0, hcnt = 0;
+    vector<int> frame;
+    for(int i = 0; frameSize != frame.size(); i++){
+        if(isPresent(frame, arr[i])) hcnt++;
+        else{
+            frame.push_back(arr[i]);
+            fcnt++;
+        } 
+    }
+    
+    for(int i = frameSize ; i < size; i++){
+        if(isPresent(frame, arr[i])){
+            hcnt++;
+        }
+        else{
+            frame[ptr] = arr[i];
+            ptr = (ptr+1)%frameSize;
+            fcnt++;
+        }
+    }
+    cout << "hit count:" << hcnt << endl;
+    float hitRatio = hcnt*10.0/frameSize;
+    hitRatio=hitRatio/10.0;
+    cout << "hit raito:" << hitRatio << endl;
+    cout << "Page fault:" << fcnt << endl;
+    return 0;
+}
+OUTPUT:
+enter size: 12
+frame size: 4
+enter elements 
+1 2 3 4 1 2 5 1 2 3 4 5 
+hit count:2
+hit raito:0.5
+Page fault:10
